@@ -4,8 +4,10 @@
 int main() {
   List list;
 
+  list.pushFirst(3);
   list.pushFirst(1);
-  list.popFirst();
+  list.insertAfter(0, 2);
+  list.print();
 
   //list->pushFirst(4);
   //list->pushFirst(3);

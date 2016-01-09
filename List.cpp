@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <iostream>
 #include "List.hpp"
 
 List::List() {
@@ -38,6 +39,69 @@ bool List::hasLast() {
   }
 
   return false;
+}
+
+void List::insertAfter(int target, const T& data) {
+  if (!hasFirst()) {
+    return;
+  }
+
+  Node* currentNode = getFirst();
+  Node* newNode = new Node(data);
+
+  for (int i = 0; i <= target; i++) {
+    if (i == target) {
+      newNode->setPrev(currentNode);
+
+      if (currentNode->hasNext()) {
+        newNode->setNext(currentNode->getNext());
+        currentNode->getNext()->setPrev(newNode);
+      }
+
+      currentNode->setNext(newNode);
+
+      return;
+    }
+
+    if (!currentNode->hasNext()) {
+      return;
+    }
+
+    currentNode = currentNode->getNext();
+  }
+
+  delete currentNode;
+}
+
+void List::insertBefore(int target, const T& data) {
+  if (!hasFirst()) {
+    return;
+  }
+
+  Node* currentNode = getFirst();
+  Node* newNode = new Node(data);
+
+  for (int i = 0; i <= target; i++) {
+    if (i == target) {
+      if (currentNode->hasPrev()) {
+        currentNode->getPrev()->setNext(newNode);
+        newNode->setPrev(currentNode->getPrev());
+      }
+
+      newNode->setNext(currentNode);
+      currentNode->setPrev(newNode);
+
+      return;
+    }
+
+    if (!currentNode->hasNext()) {
+      return;
+    }
+
+    currentNode = currentNode->getNext();
+  }
+
+  delete currentNode;
 }
 
 void List::setFirst(Node* node) {
@@ -88,6 +152,21 @@ Node* List::popLast() {
   }
 
   return NULL;
+}
+
+void List::print() {
+  if (!hasFirst()) {
+    return;
+  }
+
+  Node currentNode = *getFirst();
+
+  std::cout << currentNode.getData() << std::endl;
+
+  while (currentNode.hasNext()) {
+    std::cout << currentNode.getNext()->getData() << std::endl;
+    currentNode = *currentNode.getNext();
+  }
 }
 
 void List::pushFirst(const T& data) {
