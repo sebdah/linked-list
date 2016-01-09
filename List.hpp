@@ -8,6 +8,7 @@ class List
 
   public:
     List();
+    ~List();
 
     void empty();
     Node* getFirst();

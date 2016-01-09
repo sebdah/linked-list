@@ -3,11 +3,7 @@
 
 typedef int T;
 
-Node::Node(const T& data) {
-  setData(data);
-  setNext(NULL);
-  setPrev(NULL);
-}
+Node::Node(const T& data) : data(data), next(NULL), prev(NULL) {}
 
 T Node::getData() {
   return data;

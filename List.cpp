@@ -6,6 +6,10 @@ List::List() {
   setLast(NULL);
 }
 
+List::~List() {
+  empty();
+}
+
 void List::empty() {
   while (hasFirst()) {
     popFirst();
@@ -95,9 +99,7 @@ void List::pushFirst(const T& data) {
 
     // Set next node to the current next for the new first
     newFirst->setNext(getFirst());
-  }
-
-  if (!hasLast()) {
+  } else {
     // Set the new first as first as last if empty
     setLast(newFirst);
   }
@@ -115,9 +117,7 @@ void List::pushLast(const T& data) {
 
     // Set previos node for new last
     newLast->setPrev(getLast());
-  }
-
-  if (!hasFirst()) {
+  } else {
     setFirst(newLast);
   }
 
