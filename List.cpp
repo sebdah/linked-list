@@ -3,6 +3,7 @@
 #include "List.hpp"
 
 List::List() {
+  setDebug(false);
   setFirst(NULL);
   setLast(NULL);
 }
@@ -104,17 +105,13 @@ void List::insertBefore(int target, const T& data) {
   delete currentNode;
 }
 
-void List::setFirst(Node* node) {
-  first = node;
-}
-
-void List::setLast(Node* node) {
-  last = node;
-}
-
 Node List::popFirst() {
   if (hasFirst()) {
     Node oldFirst = *getFirst();
+
+    if (getFirst() == getLast()) {
+      setLast(NULL);
+    }
 
     delete getFirst();
 
@@ -134,6 +131,10 @@ Node List::popFirst() {
 Node List::popLast() {
   if (hasLast()) {
     Node oldLast = *getLast();
+
+    if (getFirst() == getLast()) {
+      setFirst(NULL);
+    }
 
     delete getLast();
 
@@ -155,46 +156,105 @@ void List::print() {
     return;
   }
 
-  Node currentNode = *getFirst();
+  Node* currentNode = getFirst();
 
-  std::cout << currentNode.getData() << std::endl;
-
-  while (currentNode.hasNext()) {
-    std::cout << currentNode.getNext()->getData() << std::endl;
-    currentNode = *currentNode.getNext();
+  if (!currentNode->hasNext()) {
+    printNode(currentNode);
   }
+
+  while (currentNode->hasNext()) {
+    printNode(currentNode);
+    currentNode = currentNode->getNext();
+  }
+}
+
+void List::printNode(Node* node) {
+    int next = -1;
+    if (getFirst()->hasNext()) {
+      next = node->getNext()->getData();
+    }
+
+    int prev = -1;
+    if (node->hasPrev()) {
+      prev = node->getPrev()->getData();
+    }
+
+    if (debug) {
+      std::cout << "DEBUG: "
+        << "Node: " << node->getData()
+        << " (prev: " << prev << ", next: " << next << ")"
+        << std::endl;
+    }
 }
 
 void List::pushFirst(const T& data) {
   Node* newFirst = new Node(data);
 
-  if (hasFirst()) {
-    // Update the current firsts reference to prev
-    getFirst()->setPrev(newFirst);
+  if (debug) {
+    std::cout << "DEBUG: "
+      << "Pushing "
+      << newFirst
+      << " to first"
+      << std::endl;
+  }
 
-    // Set next node to the current next for the new first
+  if (hasFirst()) {
+    getFirst()->setPrev(newFirst);
     newFirst->setNext(getFirst());
-  } else {
-    // Set the new first as first as last if empty
+  }
+
+  if (!hasLast()) {
     setLast(newFirst);
   }
 
-  // Set the new first as first
   setFirst(newFirst);
 }
 
 void List::pushLast(const T& data) {
   Node* newLast = new Node(data);
 
-  if (hasLast()) {
-    // Update the current previous to reference new next
-    getLast()->setNext(newLast);
+  if (debug) {
+    std::cout << "DEBUG: "
+      << "Pushing "
+      << newLast
+      << " to last"
+      << std::endl;
+  }
 
-    // Set previos node for new last
+  if (hasLast()) {
+    getLast()->setNext(newLast);
     newLast->setPrev(getLast());
-  } else {
+  }
+
+  if (!hasFirst()) {
     setFirst(newLast);
   }
 
   setLast(newLast);
+}
+
+void List::setDebug(bool debug) {
+  this->debug = debug;
+}
+
+void List::setFirst(Node* node) {
+  if (debug) {
+    std::cout << "DEBUG: "
+      << "Setting first to "
+      << node
+      << std::endl;
+  }
+
+  first = node;
+}
+
+void List::setLast(Node* node) {
+  if (debug) {
+    std::cout << "DEBUG: "
+      << "Setting last to "
+      << node
+      << std::endl;
+  }
+
+  last = node;
 }

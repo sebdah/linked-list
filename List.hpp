@@ -3,6 +3,7 @@
 class List
 {
   private:
+    bool debug;
     Node* first;
     Node* last;
 
@@ -20,8 +21,10 @@ class List
     Node popFirst();
     Node popLast();
     void print();
+    void printNode(Node*);
     void pushFirst(const T& data);
     void pushLast(const T& data);
+    void setDebug(bool);
     void setFirst(Node*);
     void setLast(Node*);
 };
