@@ -112,18 +112,16 @@ void List::setLast(Node* node) {
   last = node;
 }
 
-Node* List::popFirst() {
+Node List::popFirst() {
   if (hasFirst()) {
-    Node* oldFirst = getFirst();
+    Node oldFirst = *getFirst();
 
-    if (getFirst()->hasNext()) {
-      Node* next = oldFirst->getNext();
+    delete getFirst();
 
-      next->setPrev(NULL);
-      delete getFirst();
-      setFirst(next);
+    if (oldFirst.hasNext()) {
+      oldFirst.getNext()->setPrev(NULL);
+      setFirst(oldFirst.getNext());
     } else {
-      delete getFirst();
       setFirst(NULL);
     }
 
@@ -133,18 +131,16 @@ Node* List::popFirst() {
   return NULL;
 }
 
-Node* List::popLast() {
+Node List::popLast() {
   if (hasLast()) {
-    Node* oldLast = getLast();
+    Node oldLast = *getLast();
 
-    if (getLast()->hasPrev()) {
-      Node* prev = oldLast->getPrev();
+    delete getLast();
 
-      prev->setNext(NULL);
-      delete getLast();
-      setLast(prev);
+    if (oldLast.hasPrev()) {
+      oldLast.getPrev()->setNext(NULL);
+      setLast(oldLast.getPrev());
     } else {
-      delete getLast();
       setLast(NULL);
     }
 
