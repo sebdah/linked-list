@@ -14,6 +14,7 @@ class List
     List();
     ~List();
 
+    bool check(int);
     void empty();
     Node<T>* getFirst();
     Node<T>* getLast();
@@ -37,6 +38,30 @@ List<T>::List() {
   setDebug(false);
   setFirst(NULL);
   setLast(NULL);
+}
+
+template <class T>
+bool List<T>::check(int expected) {
+  int count = 0;
+
+  if (hasFirst()) {
+    Node<T>* currentNode = getFirst();
+
+    while (true) {
+      count += 1;
+      if (currentNode->hasNext()) {
+        currentNode = currentNode->getNext();
+      } else {
+        break;
+      }
+    }
+  }
+
+  if (count == expected) {
+    return true;
+  }
+
+  return false;
 }
 
 template <class T>
