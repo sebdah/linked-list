@@ -2,7 +2,6 @@
 #include "List.hpp"
 #include "Test.hpp"
 
-
 int main() {
   Test test;
 

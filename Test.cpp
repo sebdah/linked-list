@@ -4,7 +4,7 @@
 #include "Test.hpp"
 
 void Test::empty() {
-  List list;
+  List<int> list;
 
   list.pushFirst(1);
   list.pushFirst(2);
@@ -14,21 +14,21 @@ void Test::empty() {
 }
 
 void Test::getFirst() {
-  List list;
+  List<int> list;
 
   list.pushFirst(1);
   assert(list.popFirst().getData() == 1);
 }
 
 void Test::getLast() {
-  List list;
+  List<int> list;
 
   list.pushLast(1);
   assert(list.popFirst().getData() == 1);
 }
 
 void Test::hasFirst() {
-  List list;
+  List<int> list;
 
   assert(list.hasFirst() == false);
   list.pushFirst(1);
@@ -36,7 +36,7 @@ void Test::hasFirst() {
 }
 
 void Test::hasLast() {
-  List list;
+  List<int> list;
 
   assert(list.hasLast() == false);
   list.pushLast(1);
@@ -44,7 +44,7 @@ void Test::hasLast() {
 }
 
 void Test::insertAfter() {
-  List list;
+  List<int> list;
 
   list.pushFirst(3);
   list.pushFirst(1);
@@ -55,7 +55,7 @@ void Test::insertAfter() {
 }
 
 void Test::insertBefore() {
-  List list;
+  List<int> list;
 
   list.pushFirst(3);
   list.pushFirst(1);
@@ -66,7 +66,7 @@ void Test::insertBefore() {
 }
 
 void Test::popFirst() {
-  List list;
+  List<int> list;
 
   list.pushFirst(3);
   list.pushFirst(1);
@@ -75,7 +75,7 @@ void Test::popFirst() {
 }
 
 void Test::popLast() {
-  List list;
+  List<int> list;
 
   list.pushLast(1);
   list.pushLast(2);
@@ -86,14 +86,14 @@ void Test::popLast() {
 }
 
 void Test::pushFirst() {
-  List list;
+  List<int> list;
 
   list.pushFirst(1);
   assert(list.popFirst().getData() == 1);
 }
 
 void Test::pushLast() {
-  List list;
+  List<int> list;
 
   list.pushLast(1);
   assert(list.popLast().getData() == 1);
